@@ -1,0 +1,1 @@
+tns build android --bundle --env.report --env.uglify --env.snapshot --env.aot --release --key-store-path ./my-release-key.keystore --key-store-password qweqwe --key-store-alias tt --key-store-alias-password qweqwe
