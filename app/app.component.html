@@ -1,0 +1,34 @@
+<StackLayout orientation="vertical" class="todoapp">
+	<StackLayout orientation="vertical" class="header">
+		<Label class="h1" text="todos"></Label>
+		<StackLayout orientation="horizontal" class="new-todo-pane">
+			<TextField class="new-todo" hint="What needs to be done?" autofocus="" [(ngModel)]="newTodoText"></TextField>
+			<Button class="edit-button" (tap)="addTodo()" text=">"></Button>
+		</StackLayout>
+	</StackLayout>
+
+	<StackLayout orientation="vertical" class="main" *ngIf="todoStore.todos.length > 0">
+		<ListView [items]="todoStore.todos" class="todo-list">
+			<ng-template let-todo="item" let-i="index">
+				<StackLayout class="item" [class.completed]="todo.completed" [class.editing]="todo.editing">
+					<FlexboxLayout flexDirection="row" class="view">
+						<Button class="toggle" (tap)="toggleCompletion(todo)" text="{{todo.completed ? '[x]' : '[  ]'}}"></Button>
+						<Label (dbltap)="editTodo(todo)" text="{{todo.title}}"></Label>
+						<Button text="×" class="destroy" (tap)="remove(todo)"></Button>
+					</FlexboxLayout>
+				</StackLayout>
+			</ng-template>
+		</ListView>
+	</StackLayout>
+
+	<StackLayout orientation="vertical" class="footer" *ngIf="todoStore.todos.length > 0">
+		<Label class="todo-count">
+			<FormattedString>
+				<Span text="{{todoStore.getRemaining().length}}" fontAttributes="Bold"></Span>
+				<Span text=" {{todoStore.getRemaining().length == 1 ? 'item' : 'items'}} left"></Span>
+			</FormattedString>
+		</Label>
+
+		<Button class="clear-completed" *ngIf="todoStore.getCompleted().length > 0" (tap)="removeCompleted()" text="Clear completed"></Button>
+	</StackLayout>
+</StackLayout>
